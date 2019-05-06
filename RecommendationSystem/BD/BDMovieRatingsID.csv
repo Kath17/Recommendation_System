@@ -1,0 +1,441 @@
+1,Avatar,4.0
+1,Blade Runner,5.0
+1,Braveheart,4.0
+1,Dodgeball,5.0
+1,Forest Gump,4.0
+1,Kazaam,2.0
+1,Lord of the Rings,4.0
+1,Napolean Dynamite,3.0
+1,Old School,3.0
+1,Shawshank Redemption,5.0
+1,Snakes on a Plane,4.0
+1,Spiderman,4.0
+1,Star Wars,5.0
+1,The Dark Knight,4.0
+1,The Happening,1.0
+1,The Matrix,3.0
+1,Toy Story,4.0
+1,You Got Mail,1.0
+2,Avatar,5.0
+2,Dodgeball,4.0
+2,Forest Gump,5.0
+2,Gladiator,5.0
+2,Jaws,5.0
+2,Lord of the Rings,4.0
+2,Napolean Dynamite,4.0
+2,Scarface,4.0
+2,Snakes on a Plane,1.0
+2,Spiderman,3.0
+2,Star Wars,5.0
+2,The Dark Knight,5.0
+2,The Matrix,4.0
+2,Toy Story,3.0
+2,Village,2.0
+3,Alien,2.0
+3,Avatar,5.0
+3,Braveheart,5.0
+3,Dodgeball,3.0
+3,Forest Gump,4.0
+3,Gladiator,5.0
+3,Jaws,4.0
+3,Kazaam,3.0
+3,Lord of the Rings,3.0
+3,Napolean Dynamite,1.0
+3,Old School,4.0
+3,Pootie Tang,1.0
+3,Pulp Fiction,4.0
+3,Shawshank Redemption,5.0
+3,Snakes on a Plane,2.0
+3,Spiderman,4.0
+3,Star Wars,4.0
+3,The Dark Knight,5.0
+3,The Matrix,3.0
+3,Toy Story,3.0
+3,Village,3.0
+3,You Got Mail,1.0
+4,Avatar,4.0
+4,Dodgeball,2.0
+4,Forest Gump,3.0
+4,Kazaam,5.0
+4,Lord of the Rings,2.0
+4,Napolean Dynamite,1.0
+4,Old School,5.0
+4,Pootie Tang,1.0
+4,Spiderman,4.0
+4,Star Wars,5.0
+4,The Dark Knight,4.0
+4,The Matrix,5.0
+4,Toy Story,4.0
+4,Village,1.0
+4,You Got Mail,1.0
+5,Alien,5.0
+5,Avatar,2.0
+5,Blade Runner,5.0
+5,Braveheart,4.0
+5,Dodgeball,4.0
+5,Forest Gump,3.0
+5,Gladiator,4.0
+5,Jaws,4.0
+5,Kazaam,2.0
+5,Napolean Dynamite,5.0
+5,Old School,5.0
+5,Pulp Fiction,4.0
+5,Scarface,5.0
+5,Snakes on a Plane,4.0
+5,Spiderman,5.0
+5,Star Wars,5.0
+5,The Dark Knight,4.0
+5,The Happening,1.0
+5,The Matrix,4.0
+5,Toy Story,4.0
+5,Village,1.0
+5,You Got Mail,1.0
+6,Alien,4.0
+6,Blade Runner,4.0
+6,Braveheart,4.0
+6,Gladiator,4.0
+6,Lord of the Rings,5.0
+6,Napolean Dynamite,1.0
+6,Pulp Fiction,3.0
+6,Scarface,4.0
+6,Shawshank Redemption,5.0
+6,Spiderman,3.0
+6,Star Wars,3.0
+6,The Matrix,4.0
+6,Toy Story,5.0
+6,You Got Mail,3.0
+7,Avatar,4.0
+7,Braveheart,3.0
+7,Dodgeball,4.0
+7,Forest Gump,4.0
+7,Gladiator,4.0
+7,Jaws,2.0
+7,Lord of the Rings,2.0
+7,Napolean Dynamite,4.0
+7,Old School,3.0
+7,Pootie Tang,1.0
+7,Scarface,4.0
+7,Star Wars,3.0
+7,The Matrix,4.0
+7,Toy Story,4.0
+7,Village,2.0
+8,Avatar,3.0
+8,Blade Runner,1.0
+8,Braveheart,4.0
+8,Dodgeball,5.0
+8,Forest Gump,5.0
+8,Gladiator,5.0
+8,Jaws,3.0
+8,Lord of the Rings,3.0
+8,Napolean Dynamite,4.0
+8,Old School,5.0
+8,Pulp Fiction,4.0
+8,Scarface,4.0
+8,Shawshank Redemption,5.0
+8,Spiderman,4.0
+8,Star Wars,5.0
+8,The Dark Knight,4.0
+8,The Matrix,4.0
+8,Toy Story,5.0
+9,Alien,4.0
+9,Blade Runner,5.0
+9,Braveheart,4.0
+9,Dodgeball,3.0
+9,Forest Gump,5.0
+9,Gladiator,5.0
+9,Jaws,3.0
+9,Kazaam,1.0
+9,Lord of the Rings,5.0
+9,Napolean Dynamite,4.0
+9,Old School,4.0
+9,Pootie Tang,1.0
+9,Pulp Fiction,5.0
+9,Shawshank Redemption,5.0
+9,Snakes on a Plane,3.0
+9,Spiderman,4.0
+9,Star Wars,5.0
+9,The Dark Knight,4.0
+9,The Happening,2.0
+9,The Matrix,5.0
+9,Toy Story,5.0
+9,Village,4.0
+9,You Got Mail,3.0
+10,Avatar,3.0
+10,Blade Runner,5.0
+10,Dodgeball,4.0
+10,Forest Gump,5.0
+10,Gladiator,5.0
+10,Jaws,1.0
+10,Lord of the Rings,2.0
+10,Napolean Dynamite,4.0
+10,Old School,4.0
+10,Pootie Tang,1.0
+10,Pulp Fiction,4.0
+10,Scarface,4.0
+10,Shawshank Redemption,5.0
+10,Snakes on a Plane,2.0
+10,Spiderman,4.0
+10,Star Wars,5.0
+10,The Dark Knight,5.0
+10,The Matrix,4.0
+10,Toy Story,5.0
+10,Village,3.0
+11,Avatar,5.0
+11,Braveheart,3.0
+11,Dodgeball,5.0
+11,Forest Gump,5.0
+11,Gladiator,3.0
+11,Kazaam,2.0
+11,Lord of the Rings,4.0
+11,Napolean Dynamite,2.0
+11,Spiderman,5.0
+11,Star Wars,5.0
+11,The Matrix,4.0
+11,Toy Story,5.0
+12,Avatar,4.0
+12,Braveheart,4.0
+12,Dodgeball,5.0
+12,Forest Gump,5.0
+12,Gladiator,4.0
+12,Jaws,3.0
+12,Kazaam,2.0
+12,Lord of the Rings,4.0
+12,Napolean Dynamite,3.0
+12,Old School,5.0
+12,Pulp Fiction,5.0
+12,Scarface,4.0
+12,Spiderman,3.0
+12,Star Wars,5.0
+12,The Dark Knight,5.0
+12,The Matrix,5.0
+12,Toy Story,5.0
+12,You Got Mail,2.0
+13,Avatar,4.0
+13,Braveheart,3.0
+13,Dodgeball,3.0
+13,Forest Gump,5.0
+13,Gladiator,3.0
+13,Jaws,2.0
+13,Kazaam,2.0
+13,Lord of the Rings,3.0
+13,Napolean Dynamite,3.0
+13,Old School,4.0
+13,Pootie Tang,2.0
+13,Pulp Fiction,4.0
+13,Shawshank Redemption,4.0
+13,Snakes on a Plane,1.0
+13,Spiderman,4.0
+13,Star Wars,4.0
+13,The Dark Knight,5.0
+13,The Happening,1.0
+13,The Matrix,4.0
+13,Toy Story,4.0
+13,Village,4.0
+13,You Got Mail,2.0
+14,Avatar,4.0
+14,Braveheart,4.0
+14,Dodgeball,3.0
+14,Forest Gump,5.0
+14,Jaws,3.0
+14,Kazaam,1.0
+14,Lord of the Rings,4.0
+14,Napolean Dynamite,2.0
+14,Spiderman,3.0
+14,Star Wars,3.0
+14,The Matrix,4.0
+14,Toy Story,5.0
+15,Alien,2.0
+15,Avatar,1.0
+15,Blade Runner,5.0
+15,Braveheart,2.0
+15,Dodgeball,3.0
+15,Forest Gump,3.0
+15,Gladiator,3.0
+15,Jaws,2.0
+15,Kazaam,1.0
+15,Lord of the Rings,3.0
+15,Napolean Dynamite,1.0
+15,Old School,5.0
+15,Pootie Tang,3.0
+15,Pulp Fiction,5.0
+15,Scarface,3.0
+15,Shawshank Redemption,4.0
+15,Snakes on a Plane,3.0
+15,Spiderman,2.0
+15,Star Wars,4.0
+15,The Dark Knight,3.0
+15,The Happening,1.0
+15,The Matrix,4.0
+15,Toy Story,3.0
+15,Village,3.0
+16,Avatar,5.0
+16,Braveheart,5.0
+16,Dodgeball,3.0
+16,Forest Gump,5.0
+16,Gladiator,5.0
+16,Kazaam,1.0
+16,Lord of the Rings,4.0
+16,Napolean Dynamite,1.0
+16,Old School,5.0
+16,Pulp Fiction,5.0
+16,Scarface,3.0
+16,Spiderman,3.0
+16,Star Wars,5.0
+16,The Dark Knight,5.0
+16,The Happening,1.0
+16,The Matrix,5.0
+16,Toy Story,4.0
+16,Village,4.0
+16,You Got Mail,2.0
+17,Forest Gump,4.0
+17,Lord of the Rings,1.0
+17,Napolean Dynamite,3.0
+17,Snakes on a Plane,1.0
+17,Spiderman,3.0
+17,Toy Story,4.0
+18,Alien,4.0
+18,Blade Runner,3.0
+18,Braveheart,4.0
+18,Dodgeball,3.0
+18,Forest Gump,5.0
+18,Gladiator,3.0
+18,Jaws,5.0
+18,Lord of the Rings,4.0
+18,Napolean Dynamite,1.0
+18,Old School,4.0
+18,Pootie Tang,1.0
+18,Pulp Fiction,5.0
+18,Scarface,2.0
+18,Shawshank Redemption,4.0
+18,Snakes on a Plane,3.0
+18,Spiderman,2.0
+18,Star Wars,5.0
+18,The Dark Knight,4.0
+18,The Matrix,2.0
+18,Toy Story,4.0
+18,Village,1.0
+18,You Got Mail,1.0
+19,Alien,3.0
+19,Avatar,4.0
+19,Forest Gump,4.0
+19,Gladiator,4.0
+19,Jaws,5.0
+19,Spiderman,4.0
+19,Star Wars,5.0
+19,The Dark Knight,4.0
+19,The Matrix,5.0
+19,Toy Story,4.0
+19,Village,4.0
+20,Avatar,3.0
+20,Blade Runner,3.0
+20,Braveheart,3.0
+20,Dodgeball,4.0
+20,Forest Gump,4.0
+20,Jaws,3.0
+20,Kazaam,1.0
+20,Napolean Dynamite,2.0
+20,Old School,3.0
+20,Pulp Fiction,4.0
+20,Shawshank Redemption,2.0
+20,Snakes on a Plane,2.0
+20,Spiderman,3.0
+20,The Dark Knight,4.0
+20,The Matrix,5.0
+20,Toy Story,4.0
+20,You Got Mail,2.0
+21,Avatar,2.0
+21,Blade Runner,3.0
+21,Braveheart,4.0
+21,Dodgeball,3.0
+21,Forest Gump,5.0
+21,Gladiator,3.0
+21,Jaws,2.0
+21,Kazaam,1.0
+21,Lord of the Rings,5.0
+21,Napolean Dynamite,5.0
+21,Old School,3.0
+21,Pulp Fiction,3.0
+21,Scarface,4.0
+21,Shawshank Redemption,5.0
+21,Snakes on a Plane,1.0
+21,Spiderman,5.0
+21,Star Wars,5.0
+21,The Dark Knight,5.0
+21,The Happening,1.0
+21,The Matrix,4.0
+21,Toy Story,5.0
+21,Village,2.0
+21,You Got Mail,2.0
+22,Alien,2.0
+22,Avatar,1.0
+22,Blade Runner,1.0
+22,Braveheart,5.0
+22,Dodgeball,4.0
+22,Forest Gump,4.0
+22,Gladiator,3.0
+22,Jaws,4.0
+22,Kazaam,1.0
+22,Lord of the Rings,3.0
+22,Napolean Dynamite,4.0
+22,Old School,5.0
+22,Pulp Fiction,3.0
+22,Scarface,3.0
+22,Shawshank Redemption,5.0
+22,Snakes on a Plane,2.0
+22,Spiderman,2.0
+22,Star Wars,5.0
+22,The Matrix,2.0
+22,Toy Story,4.0
+22,You Got Mail,1.0
+23,Alien,5.0
+23,Avatar,4.0
+23,Braveheart,5.0
+23,Dodgeball,3.0
+23,Forest Gump,1.0
+23,Gladiator,4.0
+23,Jaws,2.0
+23,Lord of the Rings,5.0
+23,Napolean Dynamite,2.0
+23,Pulp Fiction,3.0
+23,Spiderman,3.0
+23,Star Wars,5.0
+23,The Dark Knight,4.0
+23,The Happening,1.0
+23,The Matrix,5.0
+23,Toy Story,4.0
+23,Village,2.0
+23,You Got Mail,2.0
+24,Forest Gump,4.0
+24,Jaws,3.0
+24,Kazaam,1.0
+24,Lord of the Rings,3.0
+24,Napolean Dynamite,2.0
+24,Old School,2.0
+24,Pulp Fiction,4.0
+24,Snakes on a Plane,2.0
+24,Spiderman,3.0
+24,Star Wars,5.0
+24,The Dark Knight,5.0
+24,Toy Story,5.0
+25,Alien,4.0
+25,Avatar,4.0
+25,Blade Runner,5.0
+25,Braveheart,4.0
+25,Dodgeball,3.0
+25,Forest Gump,4.0
+25,Gladiator,4.0
+25,Jaws,5.0
+25,Kazaam,1.0
+25,Lord of the Rings,3.0
+25,Napolean Dynamite,3.0
+25,Old School,3.0
+25,Pootie Tang,5.0
+25,Pulp Fiction,3.0
+25,Snakes on a Plane,1.0
+25,Spiderman,4.0
+25,Star Wars,5.0
+25,The Dark Knight,5.0
+25,The Matrix,5.0
+25,Toy Story,5.0
+25,Village,2.0
+25,You Got Mail,2.0

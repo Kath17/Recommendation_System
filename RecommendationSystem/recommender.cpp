@@ -26,18 +26,24 @@ struct predicate
     }
 };
 
+struct predicate_2
+{
+    bool operator()(const std::tuple<float, string,int> &left, const std::tuple<float, string,int> &right)
+    {
+         return get<0>(left) > get<0>(right);
+    }
+};
+
 void print_vector(vector<tuple<float,string>> n)
 {
-    int m = n.size();
-    for(int i=0; i< m; i++)
-        cout<<"Valor: "<<get<0>(n[i])<<" y vecino : "<<get<1>(n[i])<<endl;
+    for(unsigned int i=0; i< n.size(); i++)
+        cout<<"Valor: "<<get<0>(n[i])<<" y película : "<<get<1>(n[i])<<endl;
     cout<<endl;
 }
 
 void print_vector(vector<tuple<float,string,int>> n)
 {
-    int m = n.size();
-    for(int i=0; i< m; i++)
+    for(unsigned int i=0; i< n.size(); i++)
         cout<<"\nPelicula: "<<get<1>(n[i])<<" ,con puntaje: "<<get<0>(n[i])<<" y "<<get<2>(n[i])<<" veces recomendada";
     cout<<endl;
 }
@@ -47,7 +53,7 @@ vector<string> split_string_nos(const string& s,char delimit)
     vector<string> splitted;
     bool flag = false;
     splitted.push_back("");
-    for(int i=0; i<s.size(); ++i)
+    for(unsigned int i=0; i<s.size(); ++i)
     {
         if(s[i]=='"')
         {
@@ -56,7 +62,6 @@ vector<string> split_string_nos(const string& s,char delimit)
             // splitted[splitted.size()-1] += s[i];  //Comentar para no agregar ""
             continue;
         }
-
         if(s[i]==delimit && !flag)
             splitted.push_back("");
         else
@@ -65,67 +70,73 @@ vector<string> split_string_nos(const string& s,char delimit)
     return splitted;
 }
 
-db getBD(string fileName, char delimit){
+db getBD(string fileName, char delimit, int &ultimo_usuario){
 
-  db BDatos;
-  ifstream File(fileName.c_str());
+    db BDatos;
+    ifstream File(fileName.c_str());
 
-  if (!File) {
+    if (!File) {
     std::cout << "Error, could not open file." << std::endl;
-  }
+    }
 
-  vector <string> temp;
-  temp.reserve(3);
-  string line;
+    vector <string> temp;
+    temp.reserve(3);
+    string line;
 
-  // ofstream myfile;
-  // myfile.open(output);
+    // ofstream myfile;
+    // myfile.open(output);
 
-//  cout<<"Antes de while"<<endl;
-  while(getline(File,line))
-  {
-//      cout<<"Entro al while"<<endl;
-      stringstream  lineStream(line);
-      string        cell;
+    while(getline(File,line))
+    {
+        stringstream  lineStream(line);
+        string        cell;
 
-      temp = split_string_nos(line, delimit);
+        temp = split_string_nos(line, delimit);
 
-      string QString = temp[2];
-      istringstream StrToFloat(QString );
-      float floatVar;
-      StrToFloat >> floatVar;
+        string QString = temp[2];
+        istringstream StrToFloat(QString );
+        float floatVar;
+        StrToFloat >> floatVar;
 
-//      cout<<"Temp: "<<temp[0]<<endl;
-//      cout<<"Temp: "<<temp[1]<<endl;
-//      cout<<"Temp: "<<temp[2]<<endl;
+        //      cout<<"Temp: "<<temp[0]<<endl;
+        //      cout<<"Temp: "<<temp[1]<<endl;
+        //      cout<<"Temp: "<<temp[2]<<endl;
 
-      BDatos[temp[0]][temp[1]] = floatVar;
-      temp.clear();
-  }
+        BDatos[temp[0]][temp[1]] = floatVar;
+        //temp.clear();
+    }
+
+    string QString = temp[0];
+    istringstream StrToInt(QString );
+    int floatVar;
+    StrToInt >> floatVar;
+
+    ultimo_usuario = floatVar;
 
     File.close();
-  // myfile.close();
-  return BDatos;
+    // myfile.close();
+    return BDatos;
 }
 
 class RecomenderSystem{
 ///define something
 public:
     db data;
+    int ultimo_usuario;
 public:
     db load_data(string filename, char delimit)
     {
-        data = getBD(filename,delimit);
+        data = getBD(filename,delimit,ultimo_usuario);
         return data;
     }
     void print_db()
     {
         for (auto user: data)
         {
-            cout << user.first<<": \n";
+//            cout << user.first<<": \n";
             for(auto ratings: user.second)
                 cout << "\t"<<ratings.first << " : "<<ratings.second <<endl;
-            cout<<endl;
+//            cout<<endl;
         }
     }
 
@@ -154,12 +165,10 @@ public:
             if (data[user2][item.first] != 0)
             if (data[user2].find(item.first) != data[user2].end())
                 distance += fabs(data[user2][item.first] - data[user1][item.first])*fabs(data[user2][item.first] - data[user1][item.first]);
-
 //            try{
 //                distance += fabs(data[user2][item.first] - data[user1][item.first])*fabs(data[user2][item.first] - data[user1][item.first]);
 //            }
 //            catch (const std::out_of_range& oor){
-
 //            }
         }
         return sqrt(distance);
@@ -274,10 +283,8 @@ public:
 //            print_vector(distancias);
             return distancias;
         }
-        else
-        {
+        else{
             cout<<"Ingrese una distancia valida"<<endl;
-
         }
     }
 
@@ -355,6 +362,7 @@ public:
     }
     /**FIN VECINO CERCANO 2*/
 
+    // ** COMIENZO DEL RATING PROYECTADO  **/
     float probabilidad_item(string user,string movie,int k,string algoritmo)
     {
         try {
@@ -382,6 +390,7 @@ public:
             return rating_proyectado;
         }
     }
+    //** FIN DEL RATING PROYECTADO **/
 
     vector<tuple<float,string>> MapToVector( map<ItemId, RatingVal> mapa )
     {
@@ -392,106 +401,91 @@ public:
       return v;
     }
 
-    //Ingresar nuevo item en la lista de recomendados
-    //Si no esta entonces calcular puntaje con los puntajes dado por los k-usuarios
-    //Si ya esta no hacer nada
-    void IngresarItems(vector <tuple<float,string,int>> &Recomendados, tuple<float,string> &Nuevo, vector<tuple<float,string>> &MasCercanos)
+    //                    --------- Ingresar nuevo item en la lista de recomendados ----------                      //
+    bool IngresarItems(vector <tuple<float,string,int>> &Recomendados, tuple<float,string> &Nuevo,vector<tuple<float,string>> &MasCercanos,float umbral)
     {
-      if(Recomendados.size()==0){
-        //Puntaje de la pelicual get<0>
-        float puntaje = 0, nuevoPunt = 0, cont = 0;
-        for (unsigned int j = 0; j< MasCercanos.size(); j++)
-        {
-          try{
-            // saca el nombre del usuario cercano y el nombre de la pelicula y lo agrega a nuevo puntaje
-            nuevoPunt = data[get<1>(MasCercanos[j])].at(get<1>(Nuevo));
-            cont = cont +1;
-          }
-          catch (const std::out_of_range& oor){
-            //Si no encuentra la pelicula en el usuario2
-            nuevoPunt = 0;
-          }
-          puntaje = puntaje + nuevoPunt;
-        }
-        puntaje = (puntaje*1.0)/(cont*1.0);
-        Recomendados.push_back(make_tuple(puntaje,get<1>(Nuevo),cont));
-      }
-      else
-      {
-        for (unsigned int i=0; i<Recomendados.size(); i++)
-        {
-          // Pelicula : get<1> , get<0> rating
-          if(get<1>(Recomendados[i]) == get<1>(Nuevo))
-          {
-            //Si ya esta el item en los recomendados
-            cout<<" Ya esta "<<get<1>(Nuevo)<<" en los recomendados"<<endl;
-            break;
-          }
-          else if(i == Recomendados.size()-1)
-          {
-            float puntaje = 0,nuevoPunt = 0, cont = 0;
-            for (unsigned int j = 0; j< MasCercanos.size(); j++)
-            {
-              try{
-                // saca el nombre del usuario cercano y el nombre de la pelicula y lo agrega a nuevo puntaje
-                nuevoPunt = data[get<1>(MasCercanos[j])].at(get<1>(Nuevo));
-                cont = cont +1;
-              }
-              catch (const std::out_of_range& oor){
-                //Si no encuentra la pelicula en el usuario2
-                nuevoPunt = 0;
-              }
-              puntaje = puntaje + nuevoPunt;
+        unsigned int s = Recomendados.size();
+        for (unsigned int i=0; i<=s; i++){
+            if (s!=0 && get<1>(Recomendados[i]) == get<1>(Nuevo)){
+              //Si ya esta el item en los recomendados
+              cout<<" Ya esta "<<get<1>(Nuevo)<<" en los recomendados"<<endl;
+              return true;
             }
-            puntaje = (puntaje*1.0)/(cont*1.0);
-            Recomendados.push_back(make_tuple(puntaje,get<1>(Nuevo),cont));
-            break;
-          }
+            else if(s==0 ||i == Recomendados.size()-1){
+              //Si ya llegó al final y no está
+              float puntaje = 0, nuevoPunt = 0, cont = 0;
+              for (unsigned int j = 0; j< MasCercanos.size(); j++){
+                try{
+                  // Saca el puntaje del usuario cercano con el nombre de la pelicula
+                  nuevoPunt = data[get<1>(MasCercanos[j])].at(get<1>(Nuevo));
+                  // cont = cont +1;                       // COMENTAR ESTO CUANDO SE USE EL UMBRAL , DESCOMENTAR CUANDO NO SE USE EL UMBRAL
+                }
+                catch (const std::out_of_range& oor){
+                  //Si no encuentra la pelicula en el usuario2
+                  nuevoPunt = 0;
+                }
+                if(nuevoPunt >= umbral){                // DESCOMENTAR ESTO SI CONSIDERAMOS LOS QUE NO SUPEREN EL UMBRAL
+                    cont = cont +1;                     //
+                    puntaje = puntaje + nuevoPunt;
+                }                                       //
+              }
+              puntaje = (puntaje/cont);
+              Recomendados.push_back(make_tuple(puntaje,get<1>(Nuevo),cont));
+              return false;
+            }
         }
-      }
     }
 
     // ------------ 3) Recomendar pelicula segun k usuarios más parecidos--------//
     // In: Usuario, algoritmo, k-más parecidos
-    //Out: vector< pelicula, rating>
+    // Out: vector< pelicula, rating>
     vector <tuple<float,string,int>> RecomendarPorKUsuarios(string usuario, string algoritmo, int k,float umbral)
     {
-      //Recomendados guarda: Puntuacion, Nombre, y numero de veces que ha sido recomendado
-      vector <tuple<float,string,int>> Recomendados;
-      vector<tuple<float,string>> MasCercanos = vecino_cercano(usuario, k, algoritmo);
-      string usuario2;
-      // Se guardan los items ordenados de mayor puntuacion a menor puntuacion, en orden alfabetico
-      vector <tuple<float,string>> ItemsMayorMenor;
+        //Recomendados guarda: Puntuacion, Nombre, y numero de veces que ha sido recomendado
+        vector <tuple< float,string,int> > Recomendados;
+        //Mas Cercanos guarda: Puntuacion, Nombre
+        vector <tuple< float,string> > MasCercanos = vecino_cercano(usuario, k, algoritmo);
+        vector <tuple<float,string>> ItemsMayorMenor;
+        string usuario2;
+        float puntaje=0;
 
-      cout<<"Tamano: "<<MasCercanos.size()<<endl;
+        for (unsigned int i=0; i<MasCercanos.size(); i++){
+            usuario2 = get<1>(MasCercanos[i]);
+            cout<<" K usuario: "<<usuario2<<" con :"<< get<0>(MasCercanos[i])<<" de distancia"<<endl;
+            // Seleccionar las peliculas que califico cada usuario
+            ItemsMayorMenor = MapToVector(data[usuario2]);
+            // Ordenar de mayor a menor de acuerdo a su valor, y en orden alfabetico
+            stable_sort(ItemsMayorMenor.begin(),ItemsMayorMenor.end(), predicate());
+            cout<<"Peliculas del k-usuario: "<<usuario2<<" con sus ratings"<<endl;
+            print_vector(ItemsMayorMenor);
 
-      for (unsigned int i=0; i<MasCercanos.size();i++)
-      {
-        usuario2 = get<1>(MasCercanos[i]);
-        // Ordenar peliculas del usuario2 de acuerdo a su puntaje y en orden alfabetico
-        ItemsMayorMenor = MapToVector(data[usuario2]);
-        stable_sort(ItemsMayorMenor.begin(),ItemsMayorMenor.end(), predicate());
-        print_vector(ItemsMayorMenor);
-
-        for (unsigned int j=0; j<ItemsMayorMenor.size();j++)
-        {
-          //Puntaje , pelicula/libro
-          if(get<0>(ItemsMayorMenor[j])>=umbral)
-          {
-            float puntaje=0;
-            try{
-              //get <0> Puntajes  get<1>  Pelicula
-              puntaje = data[usuario].at(get<1>(ItemsMayorMenor[j]));
-              // cout<<usuario<<" ya vio: " <<get<1>(ItemsMayorMenor[j])<<" su puntaje es de: "<<puntaje<<endl;
+            for (unsigned int j = 0; j<ItemsMayorMenor.size();j++)
+            {
+                float p = get<0>(ItemsMayorMenor[j]);  //Puntaje
+                string item = get<1>(ItemsMayorMenor[j]);  //Pelicula/Libro
+                if(p>=umbral){
+                  try{
+                    puntaje = data[usuario].at(item);  //Puntaje del usuario1 (al que debemos recomendar) hacia la pelicula
+                    cout<<" El usuario: "<<usuario<<" ya vio: " <<item<<" su puntaje es de: "<<puntaje<<endl;
+                  }
+                  catch (const std::out_of_range& oor){
+                    // ----------------------Recomendando todas las peliculas que superen el umbral ----------------------//
+                    bool estaRec = IngresarItems(Recomendados,ItemsMayorMenor[j],MasCercanos,umbral);
+                    // ----------------------------- Recomendando una pelicula por cada usuario --------------------------//
+                    if(estaRec == false)    //Si la pelicula no esta en recomendados, se agregó y ya no se necesita buscar más películas
+                        break;
+                    else                   // Si la pelicula si esta en recomendados, no se agregó y se sigue con el siguiente de mayor puntaje
+                        continue;
+                  }
+                }
+                else{
+                    cout<<"Las demas peliculas no cumplen con el umbral"<<endl;
+                    break;
+                }
             }
-            catch (const std::out_of_range& oor){
-              IngresarItems(Recomendados,ItemsMayorMenor[j],MasCercanos);
-            }
-          }
         }
-        ItemsMayorMenor.clear();
-      }
-      return Recomendados;
+        stable_sort(Recomendados.begin(),Recomendados.end(), predicate_2());
+        return Recomendados;
     }
 };
 

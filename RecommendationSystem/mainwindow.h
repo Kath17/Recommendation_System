@@ -26,6 +26,10 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_pushButton_4_clicked();
+
+    void on_pushButton_3_clicked();
+
 private:
     Ui::MainWindow *ui;
     int k;
@@ -37,6 +41,7 @@ private:
 
     QString opcion = "K-vecinos más cercanos";
     QString distancia = "Manhattan";
+    int ultimo_usuario;
 };
 
 #endif // MAINWINDOW_H
