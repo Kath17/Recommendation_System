@@ -9,27 +9,25 @@
 #include <fstream>
 #include <sstream>
 
+
 using namespace std;
 
 typedef string UserId;
 typedef string ItemId;
 typedef float RatingVal;
 
-typedef map < UserId, map<ItemId, RatingVal>> db;
-//typedef map<string,map<string,float>> db;
+typedef map < UserId, map <ItemId, RatingVal> > db;
 
 struct predicate
 {
-    bool operator()(const std::tuple<float, string> &left, const std::tuple<float, string> &right)
-    {
+    bool operator()(const std::tuple<float, string> &left, const std::tuple<float, string> &right){
          return get<0>(left) > get<0>(right);
     }
 };
 
 struct predicate_2
 {
-    bool operator()(const std::tuple<float, string,int> &left, const std::tuple<float, string,int> &right)
-    {
+    bool operator()(const std::tuple<float, string,int> &left, const std::tuple<float, string,int> &right){
          return get<0>(left) > get<0>(right);
     }
 };
@@ -57,9 +55,7 @@ vector<string> split_string_nos(const string& s,char delimit)
     {
         if(s[i]=='"')
         {
-          // cout<<"Entro a "" "<<endl;
             flag = flag? false : true;
-            // splitted[splitted.size()-1] += s[i];  //Comentar para no agregar ""
             continue;
         }
         if(s[i]==delimit && !flag)
@@ -83,13 +79,9 @@ db getBD(string fileName, char delimit, int &ultimo_usuario){
     temp.reserve(3);
     string line;
 
-    // ofstream myfile;
-    // myfile.open(output);
-
     while(getline(File,line))
     {
         stringstream  lineStream(line);
-        string        cell;
 
         temp = split_string_nos(line, delimit);
 
@@ -98,12 +90,7 @@ db getBD(string fileName, char delimit, int &ultimo_usuario){
         float floatVar;
         StrToFloat >> floatVar;
 
-        //      cout<<"Temp: "<<temp[0]<<endl;
-        //      cout<<"Temp: "<<temp[1]<<endl;
-        //      cout<<"Temp: "<<temp[2]<<endl;
-
         BDatos[temp[0]][temp[1]] = floatVar;
-        //temp.clear();
     }
 
     string QString = temp[0];
@@ -114,7 +101,6 @@ db getBD(string fileName, char delimit, int &ultimo_usuario){
     ultimo_usuario = floatVar;
 
     File.close();
-    // myfile.close();
     return BDatos;
 }
 
@@ -133,10 +119,9 @@ public:
     {
         for (auto user: data)
         {
-//            cout << user.first<<": \n";
             for(auto ratings: user.second)
                 cout << "\t"<<ratings.first << " : "<<ratings.second <<endl;
-//            cout<<endl;
+            cout<<endl;
         }
     }
 
@@ -146,12 +131,10 @@ public:
 
         for(auto item: data[user1])
         {
-            //if (data[user2][item.first] != 0)
             if (data[user2].find(item.first) != data[user2].end())
             {
                 distance += fabs(data[user1][item.first] - data[user2][item.first]);
             }
-            //cout<<"Distancia: "<<distance<<endl;
         }
         return distance;
     }
@@ -162,14 +145,8 @@ public:
 
         for(auto item: data[user1])
         {
-            if (data[user2][item.first] != 0)
             if (data[user2].find(item.first) != data[user2].end())
                 distance += fabs(data[user2][item.first] - data[user1][item.first])*fabs(data[user2][item.first] - data[user1][item.first]);
-//            try{
-//                distance += fabs(data[user2][item.first] - data[user1][item.first])*fabs(data[user2][item.first] - data[user1][item.first]);
-//            }
-//            catch (const std::out_of_range& oor){
-//            }
         }
         return sqrt(distance);
     }
@@ -181,9 +158,7 @@ public:
         float sum_x = 0;
         float sum_y = 0;
         float sum_x2 = 0;
-        float sum_x_2 = 0;
         float sum_y2 = 0;
-        float sum_y_2 = 0;
         int n = 0;
         for(auto item: data[user1])
         {
@@ -237,13 +212,20 @@ public:
         vector<tuple<float,string>> distanciasTodo;
         if(algoritmo == "Manhattan" || algoritmo == "Euclidean")
         {
-            for(auto users: data)
+            if (algoritmo == "Manhattan")
             {
-                if (users.first != user)
-                    if (algoritmo == "Manhattan")
+                for(auto users: data)
+                {
+                    if (users.first != user)
                         distanciasTodo.push_back(make_tuple(manhattan(user,users.first),users.first));
-                    else
+                }
+            }
+            else {
+                for(auto users: data)
+                {
+                    if (users.first != user)
                         distanciasTodo.push_back(make_tuple(euclidean(user,users.first),users.first));
+                }
             }
 
             sort(distanciasTodo.begin(),distanciasTodo.end());
@@ -255,19 +237,25 @@ public:
                 k = n;
             for(int i=0; i <k; i++)
                 distancias.push_back(distanciasTodo[i]);
-//            print_vector(distancias);
             return distancias;
 
         }
         else if (algoritmo == "Pearson" || algoritmo == "Similitud del Coseno")
         {
-            for(auto users: data)
+            if (algoritmo == "Pearson")
             {
-                if (users.first != user)
-                    if (algoritmo == "Pearson")
+                for(auto users: data)
+                {
+                    if (users.first != user)
                         distanciasTodo.push_back(make_tuple(pearson(user,users.first),users.first));
-                    else
+                }
+            }
+            else {
+                for(auto users: data)
+                {
+                    if (users.first != user)
                         distanciasTodo.push_back(make_tuple(sim_coseno(user,users.first),users.first));
+                }
             }
 
             sort(distanciasTodo.rbegin(),distanciasTodo.rend());
@@ -279,8 +267,6 @@ public:
                 k = n;
             for(int i=0; i <k; i++)
                 distancias.push_back(distanciasTodo[i]);
-
-//            print_vector(distancias);
             return distancias;
         }
         else{
@@ -312,7 +298,6 @@ public:
                 k = n;
             for(int i=0; i <k; i++)
                 distancias.push_back(distanciasTodo[i]);
-            //print_vector(distancias);
             return distancias;
 
         }
@@ -328,7 +313,6 @@ public:
             }
 
             sort(distanciasTodo.rbegin(),distanciasTodo.rend());
-            //print_vector(distanciasTodo);
             vector<tuple<float,string>> distancias;
             distancias.reserve(k);
             int n = distanciasTodo.size();
@@ -351,13 +335,11 @@ public:
                     break;
 
             }
-            //print_vector(distancias);
             return distancias;
         }
         else
         {
             cout<<"Ingrese una distancia valida"<<endl;
-
         }
     }
     /**FIN VECINO CERCANO 2*/
@@ -367,7 +349,6 @@ public:
     {
         try {
             float rating = data[user].at(movie);
-            //cout<<"El usuario ya calificó la pelicula con: "<<rating<<endl;
             return 0;
         }
         catch (const std::out_of_range& oor){
@@ -379,14 +360,12 @@ public:
             {
                 float rate = data[get<1>(nearestNeighbors[i])].at(movie);
                 calificaiones.push_back(rate);
-                //cout<<"El vecino "<<get<1>(nearestNeighbors[i]) << " califico "<<movie<<" con "<<rate<<endl;
                 total += get<0>(nearestNeighbors[i]);
             }
             vector<float> porcentajes;
             float rating_proyectado = 0;
             for(int i=0; i<calificaiones.size();i++)
                 rating_proyectado += calificaiones[i]*(get<0>(nearestNeighbors[i])/total);
-            //cout<<"RATING: "<<rating_proyectado<<endl;
             return rating_proyectado;
         }
     }
@@ -407,21 +386,16 @@ public:
         unsigned int s = Recomendados.size();
         for (unsigned int i=0; i<=s; i++){
             if (s!=0 && get<1>(Recomendados[i]) == get<1>(Nuevo)){
-              //Si ya esta el item en los recomendados
-              cout<<" Ya esta "<<get<1>(Nuevo)<<" en los recomendados"<<endl;
               return true;
             }
-            else if(s==0 ||i == Recomendados.size()-1){
-              //Si ya llegó al final y no está
+            else if(s==0 ||i == Recomendados.size()-1){    //Si ya llegó al final y no está
               float puntaje = 0, nuevoPunt = 0, cont = 0;
               for (unsigned int j = 0; j< MasCercanos.size(); j++){
                 try{
-                  // Saca el puntaje del usuario cercano con el nombre de la pelicula
                   nuevoPunt = data[get<1>(MasCercanos[j])].at(get<1>(Nuevo));
                   // cont = cont +1;                       // COMENTAR ESTO CUANDO SE USE EL UMBRAL , DESCOMENTAR CUANDO NO SE USE EL UMBRAL
                 }
-                catch (const std::out_of_range& oor){
-                  //Si no encuentra la pelicula en el usuario2
+                catch (const std::out_of_range& oor){      //Si no encuentra la pelicula en el usuario2
                   nuevoPunt = 0;
                 }
                 if(nuevoPunt >= umbral){                // DESCOMENTAR ESTO SI CONSIDERAMOS LOS QUE NO SUPEREN EL UMBRAL
@@ -441,9 +415,7 @@ public:
     // Out: vector< pelicula, rating>
     vector <tuple<float,string,int>> RecomendarPorKUsuarios(string usuario, string algoritmo, int k,float umbral)
     {
-        //Recomendados guarda: Puntuacion, Nombre, y numero de veces que ha sido recomendado
         vector <tuple< float,string,int> > Recomendados;
-        //Mas Cercanos guarda: Puntuacion, Nombre
         vector <tuple< float,string> > MasCercanos = vecino_cercano(usuario, k, algoritmo);
         vector <tuple<float,string>> ItemsMayorMenor;
         string usuario2;
@@ -451,13 +423,8 @@ public:
 
         for (unsigned int i=0; i<MasCercanos.size(); i++){
             usuario2 = get<1>(MasCercanos[i]);
-            cout<<" K usuario: "<<usuario2<<" con :"<< get<0>(MasCercanos[i])<<" de distancia"<<endl;
-            // Seleccionar las peliculas que califico cada usuario
             ItemsMayorMenor = MapToVector(data[usuario2]);
-            // Ordenar de mayor a menor de acuerdo a su valor, y en orden alfabetico
             stable_sort(ItemsMayorMenor.begin(),ItemsMayorMenor.end(), predicate());
-            cout<<"Peliculas del k-usuario: "<<usuario2<<" con sus ratings"<<endl;
-            print_vector(ItemsMayorMenor);
 
             for (unsigned int j = 0; j<ItemsMayorMenor.size();j++)
             {
@@ -466,7 +433,6 @@ public:
                 if(p>=umbral){
                   try{
                     puntaje = data[usuario].at(item);  //Puntaje del usuario1 (al que debemos recomendar) hacia la pelicula
-                    cout<<" El usuario: "<<usuario<<" ya vio: " <<item<<" su puntaje es de: "<<puntaje<<endl;
                   }
                   catch (const std::out_of_range& oor){
                     // ----------------------Recomendando todas las peliculas que superen el umbral ----------------------//
@@ -479,7 +445,6 @@ public:
                   }
                 }
                 else{
-                    cout<<"Las demas peliculas no cumplen con el umbral"<<endl;
                     break;
                 }
             }
@@ -488,31 +453,3 @@ public:
         return Recomendados;
     }
 };
-
-
-//int main()
-//{
-//    RecomenderSystem r;
-//    r.load_data("BDs/BD_1_pre.csv",';');
-//    // r.load_data("BDs/BDLibros_pre.csv",';');
-//    // r.load_data("BDs/ratings_20m_pre.csv",',');
-//    ///r.print_db();
-
-//    ///r.print_db();
-//    //cout<<"Manhattan: "<<r.sim_coseno("Angelica","Veronica")<<endl;
-//    //cout<<r.sim_coseno("Angelica","Hailey");
-
-//    cout<<"Comenzando la distancia"<<endl;
-//    vector<string> distancias = {"manhattan","euclidean","pearson","sim_coseno"};
-//    vector <tuple<float,string,int>> respuesta = r.RecomendarPorKUsuarios("Hailey","euclidean",4,4);
-//    print_vector(respuesta);
-//    // 276736;3257224281;8
-//    // cout<<"Manhattan: "<<r.manhattan("276736","100")<<endl;
-//    // r.vecino_cercano("Angelica",3,"sim_coseno");
-//    // r.vecino_cercano("276736",100,"manhattan");
-
-//    //r.vecino_cercano("Hailey",4,"manhattan");
-//    //r.prob_movie("Angelica","Deadmau5",3,"sim_coseno");
-
-//    return 0;
-//}
