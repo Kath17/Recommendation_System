@@ -27,7 +27,9 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-        recommender.cpp
+        #mainwindow_2.cpp \
+        recommender.cpp \
+        #recommender_2.cpp
 
 HEADERS += \
         mainwindow.h

@@ -30,8 +30,8 @@ void MainWindow::on_pushButton_2_clicked()
     item = ui->lineEdit_4->text();
     umbral = ui->doubleSpinBox->value();
 
-    int nombre_1 = nombre1.toInt();
-    int nombre_2 = nombre2.toInt();
+    string nombre_1 = nombre1.toStdString();
+    string nombre_2 = nombre2.toStdString();
     string item_ = item.toStdString();
 
     // ----------------------__TABLA__-----------------------//
@@ -60,11 +60,11 @@ void MainWindow::on_pushButton_2_clicked()
     if(opcion=="K-vecinos más cercanos"){
         if(k > 0)
         {
-            vector<tuple<float,int>> Vecinos = RS.vecino_cercano(nombre_1,k,distancia.toStdString());
+            vector<tuple<float,string>> Vecinos = RS.vecino_cercano(nombre_1,k,distancia.toStdString());
     //        print_vector(Vecinos);
             for(int i=0; i<Vecinos.size(); i++)
             {
-                item1 = new QStandardItem(QString::number(get<1>(Vecinos[i])));
+                item1 = new QStandardItem(QString::fromStdString(get<1>(Vecinos[i])));
                 item2 = new QStandardItem(QString::number(get<0>(Vecinos[i])));
                 mod->setItem(i,0,item1);
                 mod->setItem(i,1,item2);
@@ -113,7 +113,7 @@ void MainWindow::on_pushButton_2_clicked()
 
     else if(opcion=="Comparar dos usuarios")
     {
-        if(nombre_1 != -1 && nombre_2 != -1 )
+        if(nombre_1 != "" && nombre_2 != "" )
         {
             float res;
             if(distancia == "Manhattan")
@@ -259,10 +259,10 @@ void MainWindow::on_pushButton_3_clicked()
         cout<<"Temp: "<<pelicula.toStdString()<<endl;
         cout<<"Temp: "<<floatVar<<endl;
 
-        RS.data[id.toInt()][pelicula.toStdString()] = floatVar;
+        RS.data[id.toStdString()][pelicula.toStdString()] = floatVar;
 
         File<<id.toStdString()+","+'"'+pelicula.toStdString()+'"'+","+puntaje.toStdString()+"\n";
     }
     File.close( );
-    cout<<"Se agrego: " <<RS.data[id.toInt()]["A"]<<endl;
+    cout<<"Se agrego: " <<RS.data[id.toStdString()]["A"]<<endl;
 }

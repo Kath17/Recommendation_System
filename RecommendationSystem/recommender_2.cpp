@@ -1,7 +1,7 @@
 #include <iostream>
 #include <map>
 #include <string>
-#include <math.h>
+#include <cmath>
 #include <vector>
 #include <tuple>
 #include <algorithm>
@@ -12,7 +12,7 @@
 
 using namespace std;
 
-typedef int UserId;
+typedef string UserId;
 typedef string ItemId;
 typedef float RatingVal;
 
@@ -28,13 +28,6 @@ struct predicate
 struct predicate_2
 {
     bool operator()(const std::tuple<float, string,int> &left, const std::tuple<float, string,int> &right){
-         return get<0>(left) > get<0>(right);
-    }
-};
-
-struct predicate_3
-{
-    bool operator()(const std::tuple<float,int> &left, const std::tuple<float,int> &right){
          return get<0>(left) > get<0>(right);
     }
 };
@@ -92,18 +85,12 @@ db getBD(string fileName, char delimit, int &ultimo_usuario){
 
         temp = split_string_nos(line, delimit);
 
-        string QString2 = temp[0];
-        istringstream StrToInt(QString2 );
-        int intVar;
-        StrToInt >> intVar;
-
-
         string QString = temp[2];
         istringstream StrToFloat(QString );
         float floatVar;
         StrToFloat >> floatVar;
 
-        BDatos[intVar][temp[1]] = floatVar;
+        BDatos[temp[0]][temp[1]] = floatVar;
     }
 
     string QString = temp[0];
@@ -138,58 +125,48 @@ public:
         }
     }
 
-    float manhattan(int user1, int user2)
+    float manhattan(string user1, string user2)
     {
         float distance = 0;
-        int tempoo = 0;
+
         for(auto item: data[user1])
         {
             if (data[user2].find(item.first) != data[user2].end())
             {
                 distance += fabs(data[user1][item.first] - data[user2][item.first]);
-                tempoo = 1;
             }
         }
-        if(tempoo == 0)
-            return 999999;
         return distance;
     }
 
-    float euclidean(int user1, int user2)
+    float euclidean(string user1, string user2)
     {
         float distance = 0;
-        int tempoo = 0;
+
         for(auto item: data[user1])
         {
             if (data[user2].find(item.first) != data[user2].end())
-            {
                 distance += fabs(data[user2][item.first] - data[user1][item.first])*fabs(data[user2][item.first] - data[user1][item.first]);
-                tempoo = 1;
-            }
         }
-        if(tempoo == 0)
-            return 999999;
         return sqrt(distance);
     }
 
-    float pearson(int user1, int user2)
+    float pearson(string user1, string user2)
     {
-        double distance = 0;
-        double sum_xy = 0;
-        double sum_x = 0;
-        double sum_y = 0;
-        double sum_x2 = 0;
-        double sum_y2 = 0;
+        float distance = 0;
+        float sum_xy = 0;
+        float sum_x = 0;
+        float sum_y = 0;
+        float sum_x2 = 0;
+        float sum_y2 = 0;
         int n = 0;
-        double x;
-        double y;
         for(auto item: data[user1])
         {
             if (data[user2].find(item.first) != data[user2].end())
             {
                 n = n +1;
-                x = data[user1][item.first];
-                y = data[user2][item.first];
+                float x = data[user1][item.first];
+                float y = data[user2][item.first];
                 sum_xy = sum_xy + x*y;
                 sum_x = sum_x + x;
                 sum_y = sum_y + y;
@@ -198,15 +175,15 @@ public:
             }
         }
         if (n == 0)
-            return -1;
-        double denominator = sqrt(sum_x2 - (sum_x*sum_x)/n)*sqrt(sum_y2 - (sum_y*sum_y)/n);
+            return 0;
+        float denominator = sqrt(sum_x2 - (sum_x*sum_x)/n)*sqrt(sum_y2 - (sum_y*sum_y)/n);
         if (denominator == 0)
-            return -1;
+            return 0;
         distance = (sum_xy-(sum_x * sum_y)/n)/denominator;
         return distance;
     }
 
-    float sim_coseno(int user1, int user2)
+    float sim_coseno(string user1, string user2)
     {
         float distance = 0;
         float dot_xy = 0;
@@ -230,9 +207,9 @@ public:
         return distance;
     }
 
-    vector<tuple<float,int>> vecino_cercano(int user,int k,string algoritmo)
+    vector<tuple<float,string>> vecino_cercano(string user,int k,string algoritmo)
     {
-        vector<tuple<float,int>> distanciasTodo;
+        vector<tuple<float,string>> distanciasTodo;
         if(algoritmo == "Manhattan" || algoritmo == "Euclidean")
         {
             if (algoritmo == "Manhattan")
@@ -253,7 +230,7 @@ public:
 
             sort(distanciasTodo.begin(),distanciasTodo.end());
 
-            vector<tuple<float,int>> distancias;
+            vector<tuple<float,string>> distancias;
             distancias.reserve(k);
             int n = distanciasTodo.size();
             if (n < k)
@@ -280,10 +257,10 @@ public:
                         distanciasTodo.push_back(make_tuple(sim_coseno(user,users.first),users.first));
                 }
             }
-            stable_sort(distanciasTodo.begin(),distanciasTodo.end(), predicate_3());
-            //sort(distanciasTodo.rbegin(),distanciasTodo.rend());
 
-            vector<tuple<float,int>> distancias;
+            sort(distanciasTodo.rbegin(),distanciasTodo.rend());
+
+            vector<tuple<float,string>> distancias;
             distancias.reserve(k);
             int n = distanciasTodo.size();
             if (n < k)
@@ -298,9 +275,9 @@ public:
     }
 
     /** VECINO CERCANO 2*/
-    vector<tuple<float,int>> vecino_cercano(int user,int k,string algoritmo,string movie)
+    vector<tuple<float,string>> vecino_cercano(string user,int k,string algoritmo,string movie)
     {
-        vector<tuple<float,int>> distanciasTodo;
+        vector<tuple<float,string>> distanciasTodo;
         if(algoritmo == "Manhattan" || algoritmo == "Euclidean")
         {
             for(auto users: data)
@@ -314,7 +291,7 @@ public:
 
             sort(distanciasTodo.begin(),distanciasTodo.end());
 
-            vector<tuple<float,int>> distancias;
+            vector<tuple<float,string>> distancias;
             distancias.reserve(k);
             int n = distanciasTodo.size();
             if (n < k)
@@ -334,9 +311,9 @@ public:
                     else
                         distanciasTodo.push_back(make_tuple(sim_coseno(user,users.first),users.first));
             }
-            stable_sort(distanciasTodo.begin(),distanciasTodo.end(), predicate_3());
-            //sort(distanciasTodo.rbegin(),distanciasTodo.rend());
-            vector<tuple<float,int>> distancias;
+
+            sort(distanciasTodo.rbegin(),distanciasTodo.rend());
+            vector<tuple<float,string>> distancias;
             distancias.reserve(k);
             int n = distanciasTodo.size();
             if (n < k)
@@ -349,7 +326,7 @@ public:
                     distancias.push_back(distanciasTodo[counter]);
 
                 }
-                catch (const std::out_of_range){
+                catch (const std::out_of_range& oor){
                     cout<<"El vecino "<<get<1>(distanciasTodo[counter])<<" no califico la pelicula "<<movie<<endl;
 
                 }
@@ -368,15 +345,15 @@ public:
     /**FIN VECINO CERCANO 2*/
 
     // ** COMIENZO DEL RATING PROYECTADO  **/
-    float probabilidad_item(int user,string movie,int k,string algoritmo)
+    float probabilidad_item(string user,string movie,int k,string algoritmo)
     {
         try {
             float rating = data[user].at(movie);
             return 0;
         }
-        catch (const std::out_of_range){
-            vector<tuple<float,int>> nearestNeighbors = vecino_cercano(user,k,algoritmo,movie);
-            //print_vector(nearestNeighbors);
+        catch (const std::out_of_range& oor){
+            vector<tuple<float,string>> nearestNeighbors = vecino_cercano(user,k,algoritmo,movie);
+            print_vector(nearestNeighbors);
             vector<float> calificaiones;
             float total = 0;
             for(int i=0; i<k ; i++)
@@ -404,7 +381,7 @@ public:
     }
 
     //                    --------- Ingresar nuevo item en la lista de recomendados ----------                      //
-    bool IngresarItems(vector <tuple<float,string,int>> &Recomendados, tuple<float,string> &Nuevo,vector<tuple<float,int>> &MasCercanos,float umbral)
+    bool IngresarItems(vector <tuple<float,string,int>> &Recomendados, tuple<float,string> &Nuevo,vector<tuple<float,string>> &MasCercanos,float umbral)
     {
         unsigned int s = Recomendados.size();
         for (unsigned int i=0; i<=s; i++){
@@ -418,7 +395,7 @@ public:
                   nuevoPunt = data[get<1>(MasCercanos[j])].at(get<1>(Nuevo));
                   // cont = cont +1;                       // COMENTAR ESTO CUANDO SE USE EL UMBRAL , DESCOMENTAR CUANDO NO SE USE EL UMBRAL
                 }
-                catch (const std::out_of_range){      //Si no encuentra la pelicula en el usuario2
+                catch (const std::out_of_range& oor){      //Si no encuentra la pelicula en el usuario2
                   nuevoPunt = 0;
                 }
                 if(nuevoPunt >= umbral){                // DESCOMENTAR ESTO SI CONSIDERAMOS LOS QUE NO SUPEREN EL UMBRAL
@@ -436,12 +413,12 @@ public:
     // ------------ 3) Recomendar pelicula segun k usuarios más parecidos--------//
     // In: Usuario, algoritmo, k-más parecidos
     // Out: vector< pelicula, rating>
-    vector <tuple<float,string,int>> RecomendarPorKUsuarios(int usuario, string algoritmo, int k,float umbral)
+    vector <tuple<float,string,int>> RecomendarPorKUsuarios(string usuario, string algoritmo, int k,float umbral)
     {
         vector <tuple< float,string,int> > Recomendados;
-        vector <tuple< float,int> > MasCercanos = vecino_cercano(usuario, k, algoritmo);
+        vector <tuple< float,string> > MasCercanos = vecino_cercano(usuario, k, algoritmo);
         vector <tuple<float,string>> ItemsMayorMenor;
-        int usuario2;
+        string usuario2;
         float puntaje=0;
 
         for (unsigned int i=0; i<MasCercanos.size(); i++){
